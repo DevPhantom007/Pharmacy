@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Акции | Аптекарскiй Магазинъ</title>
+  </head>
+  <body>
+    <!-- ==== Top Header ==== -->
+    <div class="top-header">
+      <div class="discount">
+        <span>Скидка 2% при оформлении заказа на сайте!</span>
+      </div>
+      <div class="place">
+        <p>г. Тамбов, ул. Советская 22 Время работы: пн-вс 8:00 - 22:00</p>
+      </div>
+      <div class="phone">
+        <p>Аптека +7 (4752) 33-33-33</p>
+        <p>Мед.техника +7 (4752) 22-22-22</p>
+        <a href="#" class="callback-link-top">Заказать обратный звонок</a>
+      </div>
+    </div>
+
+    <!-- ==== HEADER ==== -->
+    <header>
+      <div class="top-info">
+        <p>Формат 3 в 1 (аптека, ветеринарная аптека, медицинская техника)</p>
+        <p>25 лет опыта</p>
+        <p>Фармацевтическое консультирование</p>
+        <p>Быстрая и надежная доставка</p>
+      </div>
+      <div class="container">
+        <div class="logo">
+          <a href="index.html">
+            <img src="logo/Аптекарскiй Магазинъ1.png" alt="Логотип" />
+          </a>
+        </div>
+        <div class="search-container">
+          <div class="search">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Поиск по названию, производителю..."
+            />
+            <button id="search-button"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+        <div class="icons">
+          <i class="fa fa-heart-o" id="favorite-icon">
+            <span class="counter favorite-counter">0</span>
+          </i>
+          <i class="fa fa-shopping-cart" id="cart-icon">
+            <span class="counter cart-counter">0</span>
+          </i>
+          <i class="fa fa-user-o" id="user-icon"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==== NAVIGATION ==== -->
+    <div class="navigation">
+      <nav>
+        <ul>
+          <li><a href="index.html" class="nav-link">Главная</a></li>
+          <li><a href="catalog.html" class="nav-link">Интернет-магазин</a></li>
+          <li><a href="about.html" class="nav-link">О компании</a></li>
+          <li><a href="help.html" class="nav-link">Помощь</a></li>
+          <li><a href="promotions.html" class="nav-link active">Акции</a></li>
+          <li><a href="news.html" class="nav-link">Новости</a></li>
+          <li>
+            <a href="business.html" class="nav-link">Для юридических лиц</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- ==== PAGE HERO ==== -->
+    <div class="page-hero">
+      <h1>Акции и специальные предложения</h1>
+      <p>Выгодные предложения каждый день</p>
+    </div>
+
+    <div class="promotions-section">
+      <div class="container">
+        <div class="promotions-grid">
+          <div class="promotion-card">
+            <div class="promotion-badge">-25%</div>
+            <img
+              src="slider/ee4218ab14d336280525d017253421ebbf69c757.png"
+              alt="Акция"
+            />
+            <div class="promotion-content">
+              <h3>Скидка на витамины</h3>
+              <p>При покупке любых витаминов - скидка 25%</p>
+              <div class="promotion-date">Действует до 31.03.2024</div>
+            </div>
+          </div>
+
+          <div class="promotion-card">
+            <div class="promotion-badge">2=3</div>
+            <img
+              src="slider/831b819a-e4f6-42c9-9b72-a0c1b4ff2a2b.jpg"
+              alt="Акция"
+            />
+            <div class="promotion-content">
+              <h3>Третий товар в подарок</h3>
+              <p>При покупке двух товаров - третий в подарок</p>
+              <div class="promotion-date">Действует до 15.04.2024</div>
+            </div>
+          </div>
+
+          <div class="promotion-card">
+            <div class="promotion-badge">-30%</div>
+            <img src="slider/Copilot_20260202_022223.png" alt="Акция" />
+            <div class="promotion-content">
+              <h3>Скидка на медтехнику</h3>
+              <p>Вся медицинская техника со скидкой 30%</p>
+              <div class="promotion-date">Действует до 10.04.2024</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- modals -->
+    <div class="modal" id="cart-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>🛒 Ваша корзина</h2>
+          <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div id="cart-items-container">
+            <p class="empty-cart-message">Ваша корзина пуста</p>
+          </div>
+          <div class="cart-summary">
+            <div class="total-items">
+              <span>Товаров:</span>
+              <span id="total-items-count">0</span>
+            </div>
+            <div class="total-price">
+              <span>Итого:</span>
+              <span id="total-price">0 ₽</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-continue">Продолжить покупки</button>
+          <button class="btn-checkout">Оформить заказ</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="favorite-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>❤️ Избранные товары</h2>
+          <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div id="favorite-items-container">
+            <p class="empty-favorite-message">
+              У вас пока нет избранных товаров
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-continue">Продолжить покупки</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="login-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>👤 Вход в личный кабинет</h2>
+          <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="login-form">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="login-email"
+                placeholder="Введите ваш email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">Пароль</label>
+              <input
+                type="password"
+                id="login-password"
+                placeholder="Введите пароль"
+                required
+              />
+            </div>
+            <div class="form-options">
+              <label> <input type="checkbox" /> Запомнить меня </label>
+              <a href="#" class="forgot-password">Забыли пароль?</a>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn-login" id="login-submit">
+            Войти
+          </button>
+          <button class="btn-register" id="open-register-modal">
+            Регистрация
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="register-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>📝 Регистрация</h2>
+          <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="register-form">
+            <div class="form-group">
+              <label for="reg-name">Имя</label>
+              <input
+                type="text"
+                id="reg-name"
+                placeholder="Введите ваше имя"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="reg-email">Email</label>
+              <input
+                type="email"
+                id="reg-email"
+                placeholder="Введите ваш email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="reg-phone">Телефон</label>
+              <input
+                type="tel"
+                id="reg-phone"
+                placeholder="+7 900 000 00 00"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="reg-password">Пароль</label>
+              <input
+                type="password"
+                id="reg-password"
+                placeholder="Придумайте пароль"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="reg-confirm-password">Подтвердите пароль</label>
+              <input
+                type="password"
+                id="reg-confirm-password"
+                placeholder="Повторите пароль"
+                required
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="submit"
+            class="btn-register-submit"
+            id="register-submit"
+          >
+            Зарегистрироваться
+          </button>
+          <button class="btn-back-to-login">Вход</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==== FOOTER ==== -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-column">
+          <h3>Аптекарский Магазинъ</h3>
+          <p>г. Тамбов, ул. Советская 22</p>
+          <p>Время работы: пн-вс 8:00 - 22:00</p>
+          <div class="social-icons">
+            <a href="#"><i class="fa fa-vk"></i></a>
+            <a href="#"><i class="fa fa-telegram"></i></a>
+            <a href="#"><i class="fa fa-whatsapp"></i></a>
+            <a href="#"><i class="fa fa-instagram"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h4>Телефоны</h4>
+          <p><strong>Аптека:</strong> +7 475 725 14 10</p>
+          <p><strong>Мед.техника:</strong> +7 475 725 14 20</p>
+          <a href="#" class="callback-link">Заказать обратный звонок</a>
+        </div>
+
+        <div class="footer-column">
+          <h4>Помощь</h4>
+          <ul>
+            <li><a href="help.html">Как сделать заказ</a></li>
+            <li><a href="help.html">Оплата и бронирование</a></li>
+            <li><a href="help.html">Доставка</a></li>
+            <li><a href="help.html">Политика конфиденциальности</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Каталог</h4>
+          <ul>
+            <li><a href="catalog.html">Лекарственные препараты</a></li>
+            <li><a href="catalog.html">Витамины и БАДы</a></li>
+            <li><a href="catalog.html">Красота и уход</a></li>
+            <li><a href="catalog.html">Медицинские изделия</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Программа лояльности</h4>
+          <ul>
+            <li><a href="#">Личный кабинет</a></li>
+            <li><a href="#">Активировать карту</a></li>
+            <li><a href="#">Условия программы</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-links">
+          <a href="#">Версия для печати</a>
+          <a href="#">Разрешительная документация</a>
+          <a href="#">Условия дистанционной продажи</a>
+          <a href="#">Обратная связь</a>
+        </div>
+        <div class="footer-copyright">
+          <p>Разработка сайта - Веб студия "Максоком"</p>
+          <p>© 2022. Все права защищены</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

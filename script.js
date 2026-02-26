@@ -17,6 +17,10 @@ document.addEventListener("DOMContentLoaded", function () {
   initForms();
   collectAllProducts();
 
+  if (document.querySelector(".catalog-layout")) {
+    initCatalogFilters();
+  }
+
   setInterval(() => {
     changeSlide(1);
   }, 5000);
@@ -34,9 +38,10 @@ function collectAllProducts() {
       ? card.querySelector(".old-price").textContent
       : "";
     const image = card.querySelector(".product-image img").src;
-    const category = card
-      .closest(".products-category")
-      .querySelector(".category-title").textContent;
+    const category = card.closest(".products-category")
+      ? card.closest(".products-category").querySelector(".category-title")
+          .textContent
+      : "Каталог";
 
     allProducts.push({
       title,
@@ -79,7 +84,6 @@ function showSlides(n) {
 
   if (slides[slideIndex - 1]) {
     slides[slideIndex - 1].style.display = "block";
-    slides[slideIndex - 1].style.animation = "fadeIn 0.5s ease";
   }
 
   if (dots[slideIndex - 1]) {
@@ -91,16 +95,16 @@ function initSearch() {
   const searchInput = document.getElementById("search-input");
   const searchButton = document.getElementById("search-button");
   const searchResults = document.getElementById("search-results");
-  const searchClearBtn = document.getElementById("search-clear-btn");
 
   if (!searchInput || !searchButton || !searchResults) return;
 
+  let searchClearBtn = document.getElementById("search-clear-btn");
   if (!searchClearBtn) {
-    const clearBtn = document.createElement("button");
-    clearBtn.id = "search-clear-btn";
-    clearBtn.innerHTML = '<i class="fa fa-times"></i>';
-    clearBtn.title = "Очистить поиск";
-    searchInput.parentNode.insertBefore(clearBtn, searchButton);
+    searchClearBtn = document.createElement("button");
+    searchClearBtn.id = "search-clear-btn";
+    searchClearBtn.innerHTML = '<i class="fa fa-times"></i>';
+    searchClearBtn.title = "Очистить поиск";
+    searchInput.parentNode.insertBefore(searchClearBtn, searchButton);
   }
 
   searchButton.addEventListener("click", function () {
@@ -113,15 +117,12 @@ function initSearch() {
     }
   });
 
-  document
-    .getElementById("search-clear-btn")
-    .addEventListener("click", function () {
-      searchInput.value = "";
-      clearSearch();
-      searchInput.focus();
-    });
+  searchClearBtn.addEventListener("click", function () {
+    searchInput.value = "";
+    clearSearch();
+    searchInput.focus();
+  });
 
-  // Clear search when clicking outside
   document.addEventListener("click", function (e) {
     if (
       !searchResults.contains(e.target) &&
@@ -140,8 +141,8 @@ function performSearch(query) {
   const clearBtn = document.getElementById("search-clear-btn");
 
   if (!searchResults || !query || query.trim() === "") {
-    searchResults.style.display = "none";
-    clearBtn.style.display = "none";
+    if (searchResults) searchResults.style.display = "none";
+    if (clearBtn) clearBtn.style.display = "none";
     clearSearch();
     return;
   }
@@ -155,37 +156,30 @@ function performSearch(query) {
     );
   });
 
-  // Show clear button
-  clearBtn.style.display = "flex";
+  if (clearBtn) clearBtn.style.display = "flex";
 
   if (filteredProducts.length > 0) {
-    // Switch to search mode
     enableSearchMode();
 
-    // Hide all product categories
     const productCategories = document.querySelectorAll(".products-category");
     productCategories.forEach((cat) => {
       cat.style.display = "none";
     });
 
-    // Create search results header if not exists
     let resultsHeader = document.querySelector(".search-results-header");
     if (!resultsHeader) {
       resultsHeader = document.createElement("h2");
       resultsHeader.className = "search-results-header";
-      resultsHeader.innerHTML = `Результаты поиска: "${query}" (${filteredProducts.length})`;
       document
         .querySelector(".products-section")
         .insertBefore(
           resultsHeader,
           document.querySelector(".products-section").firstChild,
         );
-    } else {
-      resultsHeader.innerHTML = `Результаты поиска: "${query}" (${filteredProducts.length})`;
-      resultsHeader.style.display = "block";
     }
+    resultsHeader.innerHTML = `Результаты поиска: "${query}" (${filteredProducts.length})`;
+    resultsHeader.style.display = "block";
 
-    // Clear and recreate products grid
     const productsSection = document.querySelector(".products-section");
     let searchResultsGrid = document.getElementById("search-results-grid");
 
@@ -196,23 +190,18 @@ function performSearch(query) {
       productsSection.appendChild(searchResultsGrid);
     }
 
-    // Clear existing grid
     searchResultsGrid.innerHTML = "";
 
-    // Add filtered products
     filteredProducts.forEach((product) => {
       const productCard = product.element.cloneNode(true);
       productCard.style.display = "block";
-      productCard.style.animation = "fadeIn 0.3s ease";
       searchResultsGrid.appendChild(productCard);
     });
 
-    // Reinitialize buttons for new cards
     setTimeout(() => {
       initButtons();
     }, 100);
 
-    // Also show dropdown results
     let dropdownHTML = "";
     filteredProducts.forEach((product, index) => {
       dropdownHTML += `
@@ -228,7 +217,6 @@ function performSearch(query) {
     searchResults.innerHTML = dropdownHTML;
     searchResults.style.display = "block";
 
-    // Add click events to dropdown items
     document.querySelectorAll(".search-result-item").forEach((item, index) => {
       item.addEventListener("click", function () {
         const product = filteredProducts[index];
@@ -239,11 +227,9 @@ function performSearch(query) {
           });
 
           product.element.style.boxShadow = "0 0 0 3px #30b856";
-          product.element.style.zIndex = "1000";
 
           setTimeout(() => {
             product.element.style.boxShadow = "";
-            product.element.style.zIndex = "";
           }, 2000);
 
           searchResults.style.display = "none";
@@ -252,21 +238,17 @@ function performSearch(query) {
       });
     });
   } else {
-    // No results found
     enableSearchMode();
 
-    // Hide all product categories
     const productCategories = document.querySelectorAll(".products-category");
     productCategories.forEach((cat) => {
       cat.style.display = "none";
     });
 
-    // Create search results header
     let resultsHeader = document.querySelector(".search-results-header");
     if (!resultsHeader) {
       resultsHeader = document.createElement("h2");
       resultsHeader.className = "search-results-header";
-      resultsHeader.innerHTML = `Результаты поиска: "${query}" (0)`;
       document
         .querySelector(".products-section")
         .insertBefore(
@@ -278,7 +260,6 @@ function performSearch(query) {
       resultsHeader.style.display = "block";
     }
 
-    // Clear search results grid
     let searchResultsGrid = document.getElementById("search-results-grid");
     if (searchResultsGrid) {
       searchResultsGrid.innerHTML = `
@@ -290,7 +271,6 @@ function performSearch(query) {
       `;
     }
 
-    // Show dropdown message
     searchResults.innerHTML =
       '<div class="search-result-item">Ничего не найдено</div>';
     searchResults.style.display = "block";
@@ -307,24 +287,15 @@ function clearSearch() {
   const searchResultsGrid = document.getElementById("search-results-grid");
   const productCategories = document.querySelectorAll(".products-category");
 
-  // Hide clear button
   if (clearBtn) clearBtn.style.display = "none";
-
-  // Hide search results dropdown
   if (searchResults) searchResults.style.display = "none";
-
-  // Hide search results header
   if (resultsHeader) resultsHeader.style.display = "none";
-
-  // Remove search results grid
   if (searchResultsGrid) searchResultsGrid.remove();
 
-  // Show all product categories
   productCategories.forEach((cat) => {
     cat.style.display = "block";
   });
 
-  // Show all other sections
   const sectionsToShow = [
     ".contact-hero",
     ".news-section",
@@ -337,17 +308,13 @@ function clearSearch() {
     if (element) element.style.display = "block";
   });
 
-  // Remove search mode class
   document.body.classList.remove("search-filter-mode");
-
   searchMode = false;
 }
 
 function enableSearchMode() {
-  // Add search mode class to body
   document.body.classList.add("search-filter-mode");
 
-  // Hide other sections
   const sectionsToHide = [
     ".contact-hero",
     ".news-section",
@@ -400,9 +367,10 @@ function initFavoriteButtons() {
 
   favoriteButtons.forEach((button) => {
     const productCard = button.closest(".product-card");
+    if (!productCard) return;
+
     const productTitle =
       productCard.querySelector(".product-title").textContent;
-
     const isFavorite = favoriteItems.some((item) => item.id === productTitle);
 
     if (isFavorite) {
@@ -410,22 +378,31 @@ function initFavoriteButtons() {
       button.innerHTML = '<i class="fa fa-heart"></i>';
     }
 
-    button.addEventListener("click", function (e) {
-      e.stopPropagation();
-      toggleFavorite(productCard, button);
-    });
+    button.removeEventListener("click", toggleFavoriteHandler);
+    button.addEventListener("click", toggleFavoriteHandler);
   });
+}
+
+function toggleFavoriteHandler(e) {
+  e.stopPropagation();
+  const button = e.currentTarget;
+  const productCard = button.closest(".product-card");
+  toggleFavorite(productCard, button);
 }
 
 function initBuyButtons() {
   const buyButtons = document.querySelectorAll(".buy-btn");
 
   buyButtons.forEach((button) => {
-    button.addEventListener("click", function (e) {
-      e.stopPropagation();
-      addToCart(this.closest(".product-card"));
-    });
+    button.removeEventListener("click", buyHandler);
+    button.addEventListener("click", buyHandler);
   });
+}
+
+function buyHandler(e) {
+  e.stopPropagation();
+  const button = e.currentTarget;
+  addToCart(button.closest(".product-card"));
 }
 
 function initModals() {
@@ -515,6 +492,23 @@ function initForms() {
       } else {
         alert("Пожалуйста, заполните все поля!");
       }
+    });
+  }
+
+  // business form
+  const businessForm = document.getElementById("business-form");
+  if (businessForm) {
+    businessForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const company = document.getElementById("business-company").value;
+      const contact = document.getElementById("business-contact").value;
+      const phone = document.getElementById("business-phone").value;
+      const email = document.getElementById("business-email").value;
+
+      alert(
+        `Спасибо за заявку!\n\nОрганизация: ${company}\nКонтактное лицо: ${contact}\nТелефон: ${phone}\nEmail: ${email}\n\nНаш менеджер свяжется с вами в ближайшее время.`,
+      );
+      businessForm.reset();
     });
   }
 
@@ -610,11 +604,13 @@ function initForms() {
   readMoreLinks.forEach((link) => {
     link.addEventListener("click", function (e) {
       e.preventDefault();
-      const newsTitle =
-        this.closest(".news-item").querySelector(".news-title").textContent;
-      alert(
-        `Вы переходите к статье: "${newsTitle}"\n\nВ реальном приложении здесь будет открыта полная статья.`,
-      );
+      const newsItem = this.closest(".news-item");
+      if (newsItem) {
+        const newsTitle = newsItem.querySelector(".news-title").textContent;
+        alert(
+          `Вы переходите к статье: "${newsTitle}"\n\nВ реальном приложении здесь будет открыта полная статья.`,
+        );
+      }
     });
   });
 
@@ -622,13 +618,14 @@ function initForms() {
   fullReviewLinks.forEach((link) => {
     link.addEventListener("click", function (e) {
       e.preventDefault();
-      const reviewerName =
-        this.closest(".review-card").querySelector(
-          ".reviewer-name",
-        ).textContent;
-      alert(
-        `Вы переходите к полному отзыву от ${reviewerName}\n\nВ реальном приложении здесь будет открыт полный текст отзыва.`,
-      );
+      const reviewCard = this.closest(".review-card");
+      if (reviewCard) {
+        const reviewerName =
+          reviewCard.querySelector(".reviewer-name").textContent;
+        alert(
+          `Вы переходите к полному отзыву от ${reviewerName}\n\nВ реальном приложении здесь будет открыт полный текст отзыва.`,
+        );
+      }
     });
   });
 
@@ -641,9 +638,26 @@ function initForms() {
       );
     });
   }
+
+  // FAQ ակորդեոն
+  document.querySelectorAll(".faq-question").forEach((question) => {
+    question.addEventListener("click", function (e) {
+      const faqItem = this.closest(".faq-item");
+      faqItem.classList.toggle("active");
+
+      const icon = this.querySelector(".fa-chevron-down");
+      if (faqItem.classList.contains("active")) {
+        icon.style.transform = "rotate(180deg)";
+      } else {
+        icon.style.transform = "rotate(0)";
+      }
+    });
+  });
 }
 
 function toggleFavorite(productCard, button) {
+  if (!productCard) return;
+
   const productTitle = productCard.querySelector(".product-title").textContent;
   const productPrice = productCard.querySelector(".current-price").textContent;
   const productImage = productCard.querySelector(".product-image img").src;
@@ -663,7 +677,6 @@ function toggleFavorite(productCard, button) {
     favoriteCount++;
     favoriteItems.push(product);
 
-    button.style.animation = "pulse 0.3s";
     const favoriteIcon = document.querySelector("#favorite-icon");
     if (favoriteIcon) {
       favoriteIcon.style.animation = "bounce 0.5s";
@@ -671,10 +684,6 @@ function toggleFavorite(productCard, button) {
         favoriteIcon.style.animation = "";
       }, 500);
     }
-
-    setTimeout(() => {
-      button.style.animation = "";
-    }, 300);
   } else {
     button.classList.remove("active");
     button.innerHTML = '<i class="fa fa-heart-o"></i>';
@@ -688,6 +697,8 @@ function toggleFavorite(productCard, button) {
 }
 
 function addToCart(productCard) {
+  if (!productCard) return;
+
   const productTitle = productCard.querySelector(".product-title").textContent;
   const productPrice = productCard.querySelector(".current-price").textContent;
   const productImage = productCard.querySelector(".product-image img").src;
@@ -711,11 +722,18 @@ function addToCart(productCard) {
 
   cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-  const originalText = button.innerHTML;
-  const originalBackground = button.style.background;
-  button.innerHTML = '<i class="fa fa-check"></i> Добавлено';
-  button.style.background = "#4CAF50";
-  button.disabled = true;
+  if (button) {
+    const originalText = button.innerHTML;
+    button.innerHTML = '<i class="fa fa-check"></i> Добавлено';
+    button.style.background = "#4CAF50";
+    button.disabled = true;
+
+    setTimeout(() => {
+      button.innerHTML = originalText;
+      button.style.background = "";
+      button.disabled = false;
+    }, 1500);
+  }
 
   const cartIcon = document.querySelector("#cart-icon");
   if (cartIcon) {
@@ -724,12 +742,6 @@ function addToCart(productCard) {
       cartIcon.style.animation = "";
     }, 500);
   }
-
-  setTimeout(() => {
-    button.innerHTML = originalText;
-    button.style.background = originalBackground;
-    button.disabled = false;
-  }, 1500);
 
   updateLocalStorage();
   updateCartCounter();
@@ -740,8 +752,7 @@ function removeFromCart(itemId) {
   const itemIndex = cartItems.findIndex((item) => item.id === itemId);
 
   if (itemIndex !== -1) {
-    const item = cartItems[itemIndex];
-    cartCount -= item.quantity;
+    cartCount -= cartItems[itemIndex].quantity;
     cartItems.splice(itemIndex, 1);
 
     updateLocalStorage();
@@ -806,24 +817,24 @@ function updateCartModal() {
     total += itemTotal;
 
     itemsHTML += `
-            <div class="cart-item">
-                <div class="cart-item-image">
-                    <img src="${item.image}" alt="${item.title}">
-                </div>
-                <div class="cart-item-info">
-                    <div class="cart-item-title">${item.title}</div>
-                    <div class="cart-item-price">${item.price}</div>
-                    <div class="cart-item-quantity">
-                        <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
-                        <span class="quantity">${item.quantity} шт.</span>
-                        <button class="quantity-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
-                        <button class="remove-item" onclick="removeFromCart('${item.id}')">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
+      <div class="cart-item">
+        <div class="cart-item-image">
+          <img src="${item.image}" alt="${item.title}">
+        </div>
+        <div class="cart-item-info">
+          <div class="cart-item-title">${item.title}</div>
+          <div class="cart-item-price">${item.price}</div>
+          <div class="cart-item-quantity">
+            <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
+            <span class="quantity">${item.quantity} шт.</span>
+            <button class="quantity-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
+            <button class="remove-item" onclick="removeFromCart('${item.id}')">
+              <i class="fa fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
   });
 
   container.innerHTML = itemsHTML;
@@ -845,19 +856,19 @@ function updateFavoriteModal() {
 
   favoriteItems.forEach((item) => {
     itemsHTML += `
-            <div class="favorite-item">
-                <div class="favorite-item-image">
-                    <img src="${item.image}" alt="${item.title}">
-                </div>
-                <div class="favorite-item-info">
-                    <div class="favorite-item-title">${item.title}</div>
-                    <div class="favorite-item-price">${item.price}</div>
-                </div>
-                <button class="remove-item" onclick="removeFromFavorites('${item.id}')">
-                    <i class="fa fa-trash"></i>
-                </button>
-            </div>
-        `;
+      <div class="favorite-item">
+        <div class="favorite-item-image">
+          <img src="${item.image}" alt="${item.title}">
+        </div>
+        <div class="favorite-item-info">
+          <div class="favorite-item-title">${item.title}</div>
+          <div class="favorite-item-price">${item.price}</div>
+        </div>
+        <button class="remove-item" onclick="removeFromFavorites('${item.id}')">
+          <i class="fa fa-trash"></i>
+        </button>
+      </div>
+    `;
   });
 
   container.innerHTML = itemsHTML;
@@ -867,12 +878,13 @@ function removeFromFavorites(itemId) {
   const buttons = document.querySelectorAll(".favorite-btn");
   buttons.forEach((button) => {
     const productCard = button.closest(".product-card");
-    const productTitle =
-      productCard.querySelector(".product-title").textContent;
-
-    if (productTitle === itemId) {
-      button.classList.remove("active");
-      button.innerHTML = '<i class="fa fa-heart-o"></i>';
+    if (productCard) {
+      const productTitle =
+        productCard.querySelector(".product-title").textContent;
+      if (productTitle === itemId) {
+        button.classList.remove("active");
+        button.innerHTML = '<i class="fa fa-heart-o"></i>';
+      }
     }
   });
 
@@ -889,12 +901,13 @@ function loadFavoriteItems() {
     const buttons = document.querySelectorAll(".favorite-btn");
     buttons.forEach((button) => {
       const productCard = button.closest(".product-card");
-      const productTitle =
-        productCard.querySelector(".product-title").textContent;
-
-      if (productTitle === item.id) {
-        button.classList.add("active");
-        button.innerHTML = '<i class="fa fa-heart"></i>';
+      if (productCard) {
+        const productTitle =
+          productCard.querySelector(".product-title").textContent;
+        if (productTitle === item.id) {
+          button.classList.add("active");
+          button.innerHTML = '<i class="fa fa-heart"></i>';
+        }
       }
     });
   });
@@ -944,6 +957,94 @@ function closeModal(modal) {
 
   modal.classList.remove("show");
   document.body.style.overflow = "auto";
+}
+
+function initCatalogFilters() {
+  const minPrice = document.getElementById("min-price");
+  const maxPrice = document.getElementById("max-price");
+  const priceApply = document.querySelector(".price-apply");
+  const resetFilters = document.querySelector(".reset-filters");
+  const sortSelect = document.getElementById("sort-select");
+  const filterCheckboxes = document.querySelectorAll(
+    ".filter-checkboxes input",
+  );
+
+  if (priceApply) {
+    priceApply.addEventListener("click", function () {
+      applyPriceFilter();
+    });
+  }
+
+  if (resetFilters) {
+    resetFilters.addEventListener("click", function () {
+      resetAllFilters();
+    });
+  }
+
+  if (sortSelect) {
+    sortSelect.addEventListener("change", function () {
+      sortProducts(this.value);
+    });
+  }
+
+  filterCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
+      applyCategoryFilters();
+    });
+  });
+}
+
+function applyPriceFilter() {
+  const minPrice = document.getElementById("min-price")?.value || 0;
+  const maxPrice = document.getElementById("max-price")?.value || 10000;
+  alert(
+    `Фильтр по цене: от ${minPrice} до ${maxPrice} руб.\n\nВ реальном приложении здесь будет фильтрация товаров.`,
+  );
+}
+
+function resetAllFilters() {
+  const minPrice = document.getElementById("min-price");
+  const maxPrice = document.getElementById("max-price");
+  const filterCheckboxes = document.querySelectorAll(
+    ".filter-checkboxes input",
+  );
+  const sortSelect = document.getElementById("sort-select");
+
+  if (minPrice) minPrice.value = 0;
+  if (maxPrice) maxPrice.value = 10000;
+  if (sortSelect) sortSelect.value = "popular";
+
+  filterCheckboxes.forEach((checkbox) => {
+    checkbox.checked = false;
+  });
+
+  alert("Все фильтры сброшены!");
+}
+
+function sortProducts(sortBy) {
+  let sortText = "";
+  switch (sortBy) {
+    case "price-asc":
+      sortText = "цене (возрастание)";
+      break;
+    case "price-desc":
+      sortText = "цене (убывание)";
+      break;
+    case "name":
+      sortText = "названию";
+      break;
+    default:
+      sortText = "популярности";
+  }
+  alert(
+    `Сортировка по ${sortText}\n\nВ реальном приложении здесь будет сортировка товаров.`,
+  );
+}
+
+function applyCategoryFilters() {
+  alert(
+    "Фильтр по категориям применен!\n\nВ реальном приложении здесь будет фильтрация товаров.",
+  );
 }
 
 window.changeSlide = changeSlide;

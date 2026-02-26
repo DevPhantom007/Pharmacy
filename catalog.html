@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Каталог | Аптекарскiй Магазинъ</title>
+  </head>
+  <body>
+    <!-- ==== TOP HEADER ==== -->
+    <div class="top-header">
+      <div class="discount">
+        <span>Скидка 2% при оформлении заказа на сайте!</span>
+      </div>
+      <div class="place">
+        <p>г. Тамбов, ул. Советская 22 Время работы: пн-вс 8:00 - 22:00</p>
+      </div>
+      <div class="phone">
+        <p>Аптека +7 (4752) 33-33-33</p>
+        <p>Мед.техника +7 (4752) 22-22-22</p>
+        <a href="#" class="callback-link-top">Заказать обратный звонок</a>
+      </div>
+    </div>
+
+    <!-- ==== HEADER ==== -->
+    <header>
+      <div class="top-info">
+        <p>
+          Формат 3 в 1 (аптека, ветеринарная аптека, медицинская техника и
+          товары)
+        </p>
+        <p>25 лет опыта</p>
+        <p>Фармацевтическое консультирование</p>
+        <p>Быстрая и надежная доставка</p>
+      </div>
+      <div class="container">
+        <div class="logo">
+          <a href="index.html">
+            <img
+              src="logo/Аптекарскiй Магазинъ1.png"
+              alt="Логотип Аптекарскiй Магазинъ"
+            />
+          </a>
+        </div>
+        <div class="search-container">
+          <div class="search">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Поиск по названию, производителю, действующему веществу или симптому"
+            />
+            <button id="search-button"><i class="fa fa-search"></i></button>
+          </div>
+          <div id="search-results" class="search-results"></div>
+        </div>
+        <div class="icons">
+          <i class="fa fa-heart-o" id="favorite-icon">
+            <span class="counter favorite-counter">0</span>
+          </i>
+          <i class="fa fa-shopping-cart" id="cart-icon" aria-hidden="true">
+            <span class="counter cart-counter">0</span>
+          </i>
+          <i class="fa fa-user-o" id="user-icon"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==== NAVIGATION ==== -->
+    <div class="navigation">
+      <nav>
+        <ul>
+          <li>
+            <a href="catalog.html" class="nav-link active">Интернет-магазин</a>
+          </li>
+          <li><a href="index.html" class="nav-link">Главная</a></li>
+          <li><a href="about.html" class="nav-link">О компании</a></li>
+          <li><a href="help.html" class="nav-link">Помощь</a></li>
+          <li><a href="promotions.html" class="nav-link">Акции</a></li>
+          <li><a href="news.html" class="nav-link">Новости</a></li>
+          <li>
+            <a href="business.html" class="nav-link">Для юридических лиц</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- ==== CATALOG HERO ==== -->
+    <div class="catalog-hero">
+      <h1>Каталог товаров</h1>
+      <p>Более 5000 наименований лекарственных средств и медицинской техники</p>
+    </div>
+
+    <!-- ==== CATALOG CONTENT ==== -->
+    <div class="catalog-container">
+      <div class="container">
+        <div class="catalog-layout">
+          <!-- Sidebar Filters -->
+          <aside class="catalog-sidebar">
+            <div class="filter-section">
+              <h3 class="filter-title">Категории</h3>
+              <ul class="filter-list">
+                <li><a href="#" class="filter-link active">Все товары</a></li>
+                <li>
+                  <a href="#" class="filter-link">Лекарственные препараты</a>
+                </li>
+                <li><a href="#" class="filter-link">Витамины и БАДы</a></li>
+                <li><a href="#" class="filter-link">Медицинская техника</a></li>
+                <li><a href="#" class="filter-link">Ветеринарная аптека</a></li>
+                <li><a href="#" class="filter-link">Красота и уход</a></li>
+                <li><a href="#" class="filter-link">Маски и антисептики</a></li>
+              </ul>
+            </div>
+
+            <div class="filter-section">
+              <h3 class="filter-title">Цена</h3>
+              <div class="price-range">
+                <div class="price-inputs">
+                  <input
+                    type="number"
+                    id="min-price"
+                    placeholder="от"
+                    value="0"
+                  />
+                  <span>-</span>
+                  <input
+                    type="number"
+                    id="max-price"
+                    placeholder="до"
+                    value="10000"
+                  />
+                </div>
+                <button class="price-apply">Применить</button>
+              </div>
+            </div>
+
+            <div class="filter-section">
+              <h3 class="filter-title">Производитель</h3>
+              <div class="filter-checkboxes">
+                <label><input type="checkbox" /> Фармстандарт</label>
+                <label><input type="checkbox" /> Байер</label>
+                <label><input type="checkbox" /> Санофи</label>
+                <label><input type="checkbox" /> Новартис</label>
+                <label><input type="checkbox" /> Эвалар</label>
+              </div>
+            </div>
+
+            <div class="filter-section">
+              <h3 class="filter-title">Форма выпуска</h3>
+              <div class="filter-checkboxes">
+                <label><input type="checkbox" /> Таблетки</label>
+                <label><input type="checkbox" /> Капсулы</label>
+                <label><input type="checkbox" /> Сиропы</label>
+                <label><input type="checkbox" /> Спреи</label>
+                <label><input type="checkbox" /> Мази</label>
+                <label><input type="checkbox" /> Растворы</label>
+              </div>
+            </div>
+
+            <button class="reset-filters">Сбросить фильтры</button>
+          </aside>
+
+          <!-- Products Grid -->
+          <main class="catalog-main">
+            <!-- Sort Bar -->
+            <div class="sort-bar">
+              <div class="sort-options">
+                <span>Сортировка:</span>
+                <select id="sort-select">
+                  <option value="popular">По популярности</option>
+                  <option value="price-asc">Цена: по возрастанию</option>
+                  <option value="price-desc">Цена: по убыванию</option>
+                  <option value="name">По названию</option>
+                </select>
+              </div>
+              <div class="products-found">
+                Найдено: <span id="products-count">36</span> товаров
+              </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="catalog-grid">
+              <!-- Product Card 1 -->
+              <div class="product-card">
+                <div class="product-badge seasonal">Сезон</div>
+                <div class="product-image">
+                  <img src="product/1.png" alt="Витамин C" />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Витамин C 1000 мг (30 таблеток)</h3>
+                  <p class="product-desc">
+                    Укрепление иммунитета, антиоксидант
+                  </p>
+                  <div class="product-rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="rating-count">(12)</span>
+                  </div>
+                  <div class="product-price">
+                    <span class="current-price">850 ₽</span>
+                    <span class="old-price">1 100 ₽</span>
+                  </div>
+                  <div class="product-actions">
+                    <button class="buy-btn">
+                      <i class="fa fa-shopping-cart"></i> Купить
+                    </button>
+                    <button class="favorite-btn">
+                      <i class="fa fa-heart-o"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product Card 2 -->
+              <div class="product-card">
+                <div class="product-badge bestseller">Хит</div>
+                <div class="product-image">
+                  <img src="product/6.jpg" alt="Обезболивающее" />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Обезболивающее средство</h3>
+                  <p class="product-desc">Быстрое действие, 20 таблеток</p>
+                  <div class="product-rating">
+                    <span class="stars">★★★★☆</span>
+                    <span class="rating-count">(8)</span>
+                  </div>
+                  <div class="product-price">
+                    <span class="current-price">350 ₽</span>
+                  </div>
+                  <div class="product-actions">
+                    <button class="buy-btn">
+                      <i class="fa fa-shopping-cart"></i> Купить
+                    </button>
+                    <button class="favorite-btn">
+                      <i class="fa fa-heart-o"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product Card 3 -->
+              <div class="product-card">
+                <div class="product-badge discount">-25%</div>
+                <div class="product-image">
+                  <img src="product/11.png" alt="Антигистаминное" />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Антигистаминный препарат</h3>
+                  <p class="product-desc">Против аллергии, 10 таблеток</p>
+                  <div class="product-rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="rating-count">(15)</span>
+                  </div>
+                  <div class="product-price">
+                    <span class="current-price">480 ₽</span>
+                    <span class="old-price">640 ₽</span>
+                  </div>
+                  <div class="product-actions">
+                    <button class="buy-btn">
+                      <i class="fa fa-shopping-cart"></i> Купить
+                    </button>
+                    <button class="favorite-btn">
+                      <i class="fa fa-heart-o"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product Card 4 -->
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="product/2.jpg" alt="Спрей от гриппа" />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Спрей назальный противовирусный</h3>
+                  <p class="product-desc">Профилактика ОРВИ и гриппа</p>
+                  <div class="product-rating">
+                    <span class="stars">★★★★☆</span>
+                    <span class="rating-count">(6)</span>
+                  </div>
+                  <div class="product-price">
+                    <span class="current-price">1 250 ₽</span>
+                  </div>
+                  <div class="product-actions">
+                    <button class="buy-btn">
+                      <i class="fa fa-shopping-cart"></i> Купить
+                    </button>
+                    <button class="favorite-btn">
+                      <i class="fa fa-heart-o"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product Card 5 -->
+              <div class="product-card">
+                <div class="product-badge seasonal">Сезон</div>
+                <div class="product-image">
+                  <img src="product/3.jpg" alt="Иммуномодулятор" />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Иммуномодулятор комплексный</h3>
+                  <p class="product-desc">Стимуляция иммунной системы</p>
+                  <div class="product-rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="rating-count">(9)</span>
+                  </div>
+                  <div class="product-price">
+                    <span class="current-price">2 300 ₽</span>
+                    <span class="old-price">2 800 ₽</span>
+                  </div>
+                  <div class="product-actions">
+                    <button class="buy-btn">
+                      <i class="fa fa-shopping-cart"></i> Купить
+                    </button>
+                    <button class="favorite-btn">
+                      <i class="fa fa-heart-o"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product Card 6 -->
+              <div class="product-card">
+                <div class="product-badge bestseller">Хит</div>
+                <div class="product-image">
+                  <img src="product/12.jpg" alt="Тонометр" />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Автоматический тонометр</h3>
+                  <p class="product-desc">Измерение давления и пульса</p>
+                  <div class="product-rating">
+                    <span class="stars">★★★★☆</span>
+                    <span class="rating-count">(21)</span>
+                  </div>
+                  <div class="product-price">
+                    <span class="current-price">2 450 ₽</span>
+                    <span class="old-price">3 500 ₽</span>
+                  </div>
+                  <div class="product-actions">
+                    <button class="buy-btn">
+                      <i class="fa fa-shopping-cart"></i> Купить
+                    </button>
+                    <button class="favorite-btn">
+                      <i class="fa fa-heart-o"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product Card 7 -->
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="product/4.jpg" alt="Сироп от кашля" />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Сироп от кашля с плющом</h3>
+                  <p class="product-desc">Отхаркивающее средство, 200 мл</p>
+                  <div class="product-rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="rating-count">(14)</span>
+                  </div>
+                  <div class="product-price">
+                    <span class="current-price">450 ₽</span>
+                  </div>
+                  <div class="product-actions">
+                    <button class="buy-btn">
+                      <i class="fa fa-shopping-cart"></i> Купить
+                    </button>
+                    <button class="favorite-btn">
+                      <i class="fa fa-heart-o"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product Card 8 -->
+              <div class="product-card">
+                <div class="product-badge discount">-30%</div>
+                <div class="product-image">
+                  <img src="product/14.jpg" alt="Глюкометр" />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Глюкометр с тест-полосками</h3>
+                  <p class="product-desc">10 тест-полосок в комплекте</p>
+                  <div class="product-rating">
+                    <span class="stars">★★★★☆</span>
+                    <span class="rating-count">(7)</span>
+                  </div>
+                  <div class="product-price">
+                    <span class="current-price">1 900 ₽</span>
+                    <span class="old-price">2 375 ₽</span>
+                  </div>
+                  <div class="product-actions">
+                    <button class="buy-btn">
+                      <i class="fa fa-shopping-cart"></i> Купить
+                    </button>
+                    <button class="favorite-btn">
+                      <i class="fa fa-heart-o"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product Card 9 -->
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="product/7.jpg" alt="Термометр" />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Электронный термометр</h3>
+                  <p class="product-desc">Быстрый и точный замер</p>
+                  <div class="product-rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="rating-count">(32)</span>
+                  </div>
+                  <div class="product-price">
+                    <span class="current-price">890 ₽</span>
+                  </div>
+                  <div class="product-actions">
+                    <button class="buy-btn">
+                      <i class="fa fa-shopping-cart"></i> Купить
+                    </button>
+                    <button class="favorite-btn">
+                      <i class="fa fa-heart-o"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product Card 10 -->
+              <div class="product-card">
+                <div class="product-badge bestseller">Хит</div>
+                <div class="product-image">
+                  <img src="product/8.jpg" alt="Маска медицинская" />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Медицинские маски (50 шт)</h3>
+                  <p class="product-desc">3-слойные, защита от вирусов</p>
+                  <div class="product-rating">
+                    <span class="stars">★★★★☆</span>
+                    <span class="rating-count">(18)</span>
+                  </div>
+                  <div class="product-price">
+                    <span class="current-price">450 ₽</span>
+                  </div>
+                  <div class="product-actions">
+                    <button class="buy-btn">
+                      <i class="fa fa-shopping-cart"></i> Купить
+                    </button>
+                    <button class="favorite-btn">
+                      <i class="fa fa-heart-o"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product Card 11 -->
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="product/9.jpg" alt="Бинт" />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Стерильный бинт 7м х 10см</h3>
+                  <p class="product-desc">Медицинский, стерильный</p>
+                  <div class="product-rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="rating-count">(5)</span>
+                  </div>
+                  <div class="product-price">
+                    <span class="current-price">120 ₽</span>
+                  </div>
+                  <div class="product-actions">
+                    <button class="buy-btn">
+                      <i class="fa fa-shopping-cart"></i> Купить
+                    </button>
+                    <button class="favorite-btn">
+                      <i class="fa fa-heart-o"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product Card 12 -->
+              <div class="product-card">
+                <div class="product-badge seasonal">Сезон</div>
+                <div class="product-image">
+                  <img src="product/5.jpg" alt="Витамин D" />
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">Витамин D3 2000 МЕ (60 капсул)</h3>
+                  <p class="product-desc">Поддержка костей и иммунитета</p>
+                  <div class="product-rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="rating-count">(24)</span>
+                  </div>
+                  <div class="product-price">
+                    <span class="current-price">1 150 ₽</span>
+                    <span class="old-price">1 400 ₽</span>
+                  </div>
+                  <div class="product-actions">
+                    <button class="buy-btn">
+                      <i class="fa fa-shopping-cart"></i> Купить
+                    </button>
+                    <button class="favorite-btn">
+                      <i class="fa fa-heart-o"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+              <a href="#" class="page-link active">1</a>
+              <a href="#" class="page-link">2</a>
+              <a href="#" class="page-link">3</a>
+              <a href="#" class="page-link">4</a>
+              <a href="#" class="page-link">5</a>
+              <a href="#" class="page-next">→</a>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <!-- modals -->
+    <div class="modal" id="cart-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>🛒 Ваша корзина</h2>
+          <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div id="cart-items-container">
+            <p class="empty-cart-message">Ваша корзина пуста</p>
+          </div>
+          <div class="cart-summary">
+            <div class="total-items">
+              <span>Товаров:</span>
+              <span id="total-items-count">0</span>
+            </div>
+            <div class="total-price">
+              <span>Итого:</span>
+              <span id="total-price">0 ₽</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-continue">Продолжить покупки</button>
+          <button class="btn-checkout">Оформить заказ</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="favorite-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>❤️ Избранные товары</h2>
+          <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div id="favorite-items-container">
+            <p class="empty-favorite-message">
+              У вас пока нет избранных товаров
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-continue">Продолжить покупки</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="login-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>👤 Вход в личный кабинет</h2>
+          <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="login-form">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="login-email"
+                placeholder="Введите ваш email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">Пароль</label>
+              <input
+                type="password"
+                id="login-password"
+                placeholder="Введите пароль"
+                required
+              />
+            </div>
+            <div class="form-options">
+              <label> <input type="checkbox" /> Запомнить меня </label>
+              <a href="#" class="forgot-password">Забыли пароль?</a>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn-login" id="login-submit">
+            Войти
+          </button>
+          <button class="btn-register" id="open-register-modal">
+            Регистрация
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="register-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>📝 Регистрация</h2>
+          <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="register-form">
+            <div class="form-group">
+              <label for="reg-name">Имя</label>
+              <input
+                type="text"
+                id="reg-name"
+                placeholder="Введите ваше имя"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="reg-email">Email</label>
+              <input
+                type="email"
+                id="reg-email"
+                placeholder="Введите ваш email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="reg-phone">Телефон</label>
+              <input
+                type="tel"
+                id="reg-phone"
+                placeholder="+7 900 000 00 00"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="reg-password">Пароль</label>
+              <input
+                type="password"
+                id="reg-password"
+                placeholder="Придумайте пароль"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="reg-confirm-password">Подтвердите пароль</label>
+              <input
+                type="password"
+                id="reg-confirm-password"
+                placeholder="Повторите пароль"
+                required
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="submit"
+            class="btn-register-submit"
+            id="register-submit"
+          >
+            Зарегистрироваться
+          </button>
+          <button class="btn-back-to-login">Вход</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==== FOOTER ==== -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-column">
+          <h3>Аптекарский Магазинъ</h3>
+          <p>г. Тамбов, ул. Советская 22</p>
+          <p>Время работы: пн-вс 8:00 - 22:00</p>
+          <div class="social-icons">
+            <a href="#"><i class="fa fa-vk"></i></a>
+            <a href="#"><i class="fa fa-telegram"></i></a>
+            <a href="#"><i class="fa fa-whatsapp"></i></a>
+            <a href="#"><i class="fa fa-instagram"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h4>Телефоны</h4>
+          <p><strong>Аптека:</strong> +7 475 725 14 10</p>
+          <p><strong>Мед.техника:</strong> +7 475 725 14 20</p>
+          <a href="#" class="callback-link">Заказать обратный звонок</a>
+        </div>
+
+        <div class="footer-column">
+          <h4>Помощь</h4>
+          <ul>
+            <li><a href="help.html">Как сделать заказ</a></li>
+            <li><a href="help.html">Оплата и бронирование</a></li>
+            <li><a href="help.html">Доставка</a></li>
+            <li><a href="help.html">Политика конфиденциальности</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Каталог</h4>
+          <ul>
+            <li><a href="catalog.html">Лекарственные препараты</a></li>
+            <li><a href="catalog.html">Витамины и БАДы</a></li>
+            <li><a href="catalog.html">Красота и уход</a></li>
+            <li><a href="catalog.html">Медицинские изделия</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Программа лояльности</h4>
+          <ul>
+            <li><a href="#">Личный кабинет</a></li>
+            <li><a href="#">Активировать карту</a></li>
+            <li><a href="#">Условия программы</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-links">
+          <a href="#">Версия для печати</a>
+          <a href="#">Разрешительная документация</a>
+          <a href="#">Условия дистанционной продажи</a>
+          <a href="#">Обратная связь</a>
+        </div>
+        <div class="footer-copyright">
+          <p>Разработка сайта - Веб студия "Максоком"</p>
+          <p>© 2022. Все права защищены</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
