@@ -10,6 +10,7 @@
 
 
 ## 🔗 Live Demo
+https://devphantom007.github.io/Pharmacy/
 
 
 ## 📝 Լիցենզիա
